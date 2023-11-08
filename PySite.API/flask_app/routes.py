@@ -41,3 +41,16 @@ def handle_user(user_id):
             return jsonify(users[user_id])
     else:
         return jsonify({"message": "User not found"}), 404
+    
+    data = request.get_json()
+    if request.method == "PUT":
+        users[user_id] = data
+        return jsonify(users[user_id])
+    
+    if request.method == "DELETE":
+        users.popitem(data)
+        return jsonify(users)
+
+        
+        
+
