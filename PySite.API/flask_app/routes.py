@@ -5,6 +5,7 @@ from flask import jsonify, request
 current_id = 0
 users = {str(current_id): {"name": "Jonass"}}
 
+print("this happened")
 
 @app.route("/api/users", methods=["GET", "POST"])
 def handle_users():
@@ -39,18 +40,18 @@ def handle_user(user_id):
     if user_id in users:
         if request.method == "GET":
             return jsonify(users[user_id])
+        
+        if request.method == "DELETE":
+            users.pop(user_id, "no data found")
+            print(users)
+            return jsonify(users)
     else:
         return jsonify({"message": "User not found"}), 404
     
+
+    
     data = request.get_json()
+
     if request.method == "PUT":
         users[user_id] = data
         return jsonify(users[user_id])
-    
-    if request.method == "DELETE":
-        users.popitem(data)
-        return jsonify(users)
-
-        
-        
-
